@@ -23,9 +23,9 @@ cuadratica xs x =
 lagrange :: (Eq t, Fractional t) => [(t, t)] -> t -> t
 lagrange [] _ = 0
 lagrange xs x =
-	let n = (length xs) - 1
-	    yy = toGroup xs
-	    p = [product' (xs!!a) (yy!!a) x | a<-[0..n]]
+	let n  = (length xs) - 1
+	    ys = toGroup xs
+	    p  = [product' (xs!!a) (ys!!a) x | a<-[0..n]]
 	in sum p
 
 toGroup :: Eq a => [a] -> [[a]]
@@ -44,9 +44,9 @@ product' :: Fractional a => (a, a) -> [(a, t)] -> a -> a
 product' xx yy a =
 	let i = fst xx
 	    j = snd xx
-	    m = [k | (k,l) <- yy]
-	    numerador = product (map(\x -> a - x) m)
-	    denominador = product (map(\x -> i - x) m)
+	    k = [fst ms | ms <- yy]
+	    numerador = product (map(\x -> a - x) k)
+	    denominador = product (map(\x -> i - x) k)
 	    res = (*) ((/) numerador denominador) j
 	in res
 -- Metodo principal
