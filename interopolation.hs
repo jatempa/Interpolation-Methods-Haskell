@@ -22,33 +22,13 @@ cuadratica xs x =
 -- Metodo de Lagrange
 lagrange :: (Eq t, Fractional t) => [(t, t)] -> t -> t
 lagrange [] _ = 0
-lagrange xs x =
-	let n  = (length xs) - 1
-	    ys = toGroup xs
-	    p  = [product' (xs!!a) (ys!!a) x | a<-[0..n]]
-	in  sum p
-
-toGroup :: Eq a => [a] -> [[a]]
-toGroup lista = 
-	let n = (length lista) - 1
-	    cs = group n [ys | xs <- lista, ys <- lista, xs /= ys]
-	in  cs
-
-group :: Int -> [a] -> [[a]]
-group _ [] = []
-group n l
-  | n > 0 = (take n l) : (group n (drop n l))
-  | otherwise = error "Negative n"
-
-product' :: Fractional a => (a, a) -> [(a, t)] -> a -> a
-product' xx yy a =
-	let i = fst xx
-	    j = snd xx
-	    k = [fst ms | ms <- yy]
-	    numerador = product (map(\x -> a - x) k)
-	    denominador = product (map(\x -> i - x) k)
-	    res = (*) ((/) numerador denominador) j
-	in  res
+lagrange lst x =
+	let n   = length lst - 1
+	    xs  = map fst lst
+	    ys  = map snd lst
+	    p i = product[(x - xs !! j) / (xs !! i - xs !! j) | j <- [0 .. n], i /= j]
+	    q   = [(ys !! i) * (p i)| i <- [0..n]]
+	in  sum q
 -- Metodo principal
 interpolar :: (Eq a, Fractional a, Show a) => [(a, a)] -> a -> [Char]
 interpolar xs x | length xs == 2 = "f(" ++ show x ++ ") = " ++ show (lineal xs x)
