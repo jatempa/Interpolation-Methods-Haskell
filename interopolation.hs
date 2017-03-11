@@ -28,10 +28,3 @@ lagrange lst x =
         p i = product[(x - xs !! j) / (xs !! i - xs !! j) | j <- [0 .. n], i /= j]
         q   = [(ys !! i) * (p i)| i <- [0..n]]
     in  sum q
--- Metodo principal
-interpolar :: (Fractional a, Show a) => [(a, a)] -> a -> [Char]
-interpolar lst x 
-    | length lst == 2 = "f(" ++ show x ++ ") = " ++ show (lineal lst x)
-    | length lst == 3 = "f(" ++ show x ++ ") = " ++ show (cuadratica lst x)
-    | length lst >= 4 = "f(" ++ show x ++ ") = " ++ show (lagrange lst x)
-    | otherwise      = "Error: parametros invalidos para su evaluacion."
