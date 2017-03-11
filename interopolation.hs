@@ -1,3 +1,5 @@
+module Interpolacion(lineal, cuadratica, lagrange) where
+
 -- Calcular pendiente
 pendiente :: Fractional b => [(b, b)] -> b
 pendiente lst = 
