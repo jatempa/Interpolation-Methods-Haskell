@@ -1,4 +1,5 @@
 import Interpolacion
+import Graphics.EasyPlot
 
 -- Metodo interpolar
 interpolar :: Fractional b => [(b, b)] -> b -> b
@@ -13,5 +14,7 @@ main = do
     putStrLn "Introduce una lista de pares ordenados [(x1,y1),(x2,y3),...,(xN,yN)]"
     l <- getLine
     putStrLn "Introduce una incognita x"
-    a <- getLine
-    putStrLn $ "Resultado de f(" ++ show a ++ ") = " ++ show (interpolar (read l) (read a))
+    x <- getLine
+    let y = interpolar (read l) (read x)
+    putStrLn $ "Resultado de f(" ++ x ++ ") = " ++ show y
+    plot X11 [Data2D [Title "Datos", Color Red] [] (read l), Data2D [Title "Incognita", Style Points, Color Blue] [] [(read x,y)]]
